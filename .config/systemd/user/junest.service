@@ -1,0 +1,10 @@
+[Unit]
+Description=Create JuNest image
+
+[Service]
+ExecStart=/home/builder/build_image.sh
+Type=simple
+
+[Install]
+WantedBy=default.target
+
