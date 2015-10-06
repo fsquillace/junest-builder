@@ -2,7 +2,7 @@
 Description=Create JuNest image
 
 [Service]
-ExecStart=/home/builder/build_image.sh
+ExecStart=/usr/bin/sh -c 'git pull origin master && /home/builder/build_image.sh'
 Type=simple
 
 [Install]

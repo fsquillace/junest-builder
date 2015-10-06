@@ -50,4 +50,4 @@ done
 # Cleanup
 ARCH=x86_64
 droxi ls /Public/junest/junest-${ARCH}.tar.gz.* | sed 's/ .*$//' | head -n -3 | xargs -I {} droxi rm "{}"
-
+rm -rf ${JUNEST_BUILDER}

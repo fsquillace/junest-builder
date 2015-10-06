@@ -8,11 +8,13 @@ Installation
 You need to update the Arch Linux system, create a user named *builder* and
 put the content of this repository in the builder's home:
     # pacman -Syu
-    # pacman -S sudo
+    # pacman -S sudo git
     # useradd -m builder
     # passwd builder
     # echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
     # git clone https://github.com/fsquillace/junest-builder.git /home/builder
+    # git config --global user.email "builder@junest.org"
+    # git config --global user.name "builder"
 
 Quickstart
 ----------
