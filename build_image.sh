@@ -12,7 +12,7 @@ sudo rm -rf ${JUNEST_BUILDER}/*
 
 
 # ArchLinux System initialization
-sudo pacman -Syyu
+sudo pacman -Syyu --noconfirm
 sudo pacman -S --noconfirm git base-devel arch-install-scripts haveged
 sudo systemctl start haveged
 mkdir -p ${JUNEST_BUILDER}/tmp/package-query

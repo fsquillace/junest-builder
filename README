@@ -12,12 +12,14 @@ put the content of this repository in the builder's home:
     # useradd -m builder
     # passwd builder
     # echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+    # su builder
     # git clone https://github.com/fsquillace/junest-builder.git /home/builder
     # git config --global user.email "builder@junest.org"
     # git config --global user.name "builder"
 
 Quickstart
 ----------
+Access as *builder* user:
 
     $ systemctl --user daemon-reload
     $ systemctl --user start junest
