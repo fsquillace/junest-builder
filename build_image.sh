@@ -5,11 +5,9 @@ set -eu
 JUNEST_BUILDER=/home/builder/junest-builder
 
 # Cleanup and initialization
-[ -d ${JUNEST_BUILDER} ] && rm -rf ${JUNEST_BUILDER}
+[ -d ${JUNEST_BUILDER} ] && sudo rm -rf ${JUNEST_BUILDER}
 mkdir -p ${JUNEST_BUILDER}/tmp
 mkdir -p ${JUNEST_BUILDER}/junest
-sudo rm -rf ${JUNEST_BUILDER}/*
-
 
 # ArchLinux System initialization
 sudo pacman -Syyu --noconfirm
@@ -19,7 +17,7 @@ sudo pacman -S --noconfirm git base-devel arch-install-scripts haveged
 # http://bit.ly/1ZIkVqh
 if [[ $(uname -m) =~ .*(arm).* ]]
 then
-    sudo sed -e 's/unshare --fork --pid//' /usr/bin/arch-chroot
+    sudo sed -i -e 's/unshare --fork --pid//' /usr/bin/arch-chroot
 fi
 
 sudo systemctl start haveged
