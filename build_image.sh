@@ -14,6 +14,14 @@ sudo rm -rf ${JUNEST_BUILDER}/*
 # ArchLinux System initialization
 sudo pacman -Syyu --noconfirm
 sudo pacman -S --noconfirm git base-devel arch-install-scripts haveged
+
+# Fix for ARM architectures
+# http://bit.ly/1ZIkVqh
+if [[ $(uname -m) =~ .*(arm).* ]]
+then
+    sudo sed -e 's/unshare --fork --pid//' /usr/bin/arch-chroot
+fi
+
 sudo systemctl start haveged
 mkdir -p ${JUNEST_BUILDER}/tmp/package-query
 cd ${JUNEST_BUILDER}/tmp/package-query
