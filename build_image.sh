@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# ARCH can be one of: x86, x86_64, arm
+ARCH=""
+[ "$1" != "" ] && ARCH=$1
+
 set -eu
 
 JUNEST_BUILDER=/home/builder/junest-builder
@@ -46,5 +50,5 @@ do
 done
 
 # Cleanup
-[ "$1" != "" ] && droxi ls /Public/junest/junest-${1}.tar.gz.* | sed 's/ .*$//' | head -n -3 | xargs -I {} droxi rm "{}"
+[ "$ARCH" != "" ] && droxi ls /Public/junest/junest-${ARCH}.tar.gz.* | sed 's/ .*$//' | head -n -3 | xargs -I {} droxi rm "{}"
 rm -rf ${JUNEST_BUILDER}
