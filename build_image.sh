@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # ARCH can be one of: x86, x86_64, arm
+# The optional ARCH is only used to identify the oldest images
+# that need to be deleted in dropbox
 ARCH=""
 [ "$1" != "" ] && ARCH=$1
 
@@ -29,8 +31,6 @@ makepkg --noconfirm -sfc
 sudo pacman --noconfirm -U yaourt*.pkg.tar.xz
 yaourt -S --noconfirm droxi junest-git
 
-sudo systemctl start haveged
-
 # Building JuNest image
 cd ${JUNEST_BUILDER}
 JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp /opt/junest/bin/junest -b
@@ -51,4 +51,4 @@ done
 
 # Cleanup
 [ "$ARCH" != "" ] && droxi ls /Public/junest/junest-${ARCH}.tar.gz.* | sed 's/ .*$//' | head -n -3 | xargs -I {} droxi rm "{}"
-rm -rf ${JUNEST_BUILDER}
+sudo rm -rf ${JUNEST_BUILDER}

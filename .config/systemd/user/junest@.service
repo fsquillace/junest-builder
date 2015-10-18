@@ -1,0 +1,11 @@
+[Unit]
+Description=Create JuNest image for %I architecture
+After=haveged.service
+
+[Service]
+ExecStart=/usr/bin/sh -c 'git pull origin master && /home/builder/build_image.sh %I'
+Type=simple
+
+[Install]
+WantedBy=default.target
+
