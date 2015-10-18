@@ -21,5 +21,10 @@ Quickstart
 ----------
 Access as *builder* user:
 
+    $ ARCH=<one of x86, x86_64, arm>
     $ systemctl --user daemon-reload
-    $ systemctl --user start junest
+    $ systemctl --user start junest@${ARCH}.service
+
+To automatically generate the image as soon as the user session is opened:
+
+    $ systemctl --user enable junest@${ARCH}.service
