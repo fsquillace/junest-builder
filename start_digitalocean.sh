@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage: ./start TOKEN IMAGE_ID ARCH
+# Usage: ./start TOKEN IMAGE_ID SSH_ID ARCH
 # i.e. ./start w2390jabafoijfewaefmp2 66666 x86_64
 
 TOKEN=$1
@@ -10,7 +10,6 @@ set -eu
 
 ENDPOINT="https://api.digitalocean.com/v2/droplets"
 
-echo "Creating droplet with image id: ${IMAGE_ID}..."
 ID=$(curl -sX POST -H 'Content-Type: application/json' -H "Authorization: Bearer ${TOKEN}" -d "{\"name\":\"arch\",\"region\":\"ams3\",\"size\":\"512mb\",\"image\":${IMAGE_ID},\"ssh_keys\":null,\"backups\":false,\"ipv6\":false,\"user_data\":null,\"private_networking\":null}" "${ENDPOINT}" | jq .droplet.id)
 echo "Created droplet ${ID}"
 
@@ -42,5 +41,8 @@ done
 
 sleep 60
 
+echo "Setting up the builder user..."
+ssh -o "StrictHostKeyChecking no" -i ~/.ssh/digitalocean_rsa root@${IP} -- /usr/bin/sh -c "git clone https://github.com/fsquillace/junest-builder.git /opt/junest-builder && /opt/junest-builder/setup_builder.sh"
+
 echo "Building JuNest image..."
-ssh -o "StrictHostKeyChecking no" -i ~/.ssh/digitalocean_rsa builder@${IP} -- /usr/bin/sh -c "cd /home/builder && git pull origin master && /home/builder/build_image.sh $ARCH"
+ssh -o "StrictHostKeyChecking no" -i ~/.ssh/digitalocean_rsa builder@${IP} -- /usr/bin/sh -c "/opt/junest-builder/build_image.sh $ARCH"
