@@ -1,19 +1,18 @@
-
-
-
-
 Installation (Classic)
-------------
+==============
 
 Given an Arch Linux system, run the following to prepare the JuNest builder:
 
-    curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash
+```sh
+curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash
+```
 
 This will create a new user (`builder`) and create the basic packages such as
 `droxi` used for publishing the JuNest image to Dropbox.
 
 Create manually the JuNest image
-~~~~~~~~~~~~
+------------
+
 Access as *builder* user:
 
     # ssh builder@<hostname>
@@ -27,7 +26,7 @@ To automatically generate the image as soon as the user session is opened:
     $ systemctl --user enable junest@${ARCH}.service
 
 Installation using Digital Ocean
-----------------------------------
+================
 
 With [Digital Ocean](https://cloud.digitalocean.com/droplets)
 you can create x32 or x64 JuNest builders.
@@ -61,6 +60,8 @@ To automate the creation of JuNest images you also need:
     `curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer <access token>' "https://api.digitalocean.com/v2/account/keys"`
 
 Create the JuNest image using Digital Ocean snapshot
-~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
+```sh
     ./start_digitalocean.sh 'Your digital ocean access token' <snapshot id> <ssh key id> <x86 or x86_64>
+```
