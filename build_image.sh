@@ -30,6 +30,7 @@ curl -L -J -O -k "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=yaourt
 makepkg --noconfirm -sfc
 sudo pacman --noconfirm -U yaourt*.pkg.tar.xz
 yaourt -S --noconfirm droxi junest-git
+sudo systemctl start haveged
 
 # Building JuNest image
 cd ${JUNEST_BUILDER}
