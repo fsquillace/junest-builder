@@ -30,11 +30,6 @@ echo "Got droplet ip: ${IP}"
 
 sleep 15
 
-echo "Setting up the builder user..."
-ssh -o "StrictHostKeyChecking no" -i ~/.ssh/digitalocean_rsa root@${IP} -- /usr/bin/sh << EOF
-    curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash
-EOF
-
 echo "Building JuNest image..."
 ssh -o "StrictHostKeyChecking no" -i ~/.ssh/digitalocean_rsa builder@${IP} -- /usr/bin/sh << EOF
     sudo git clone https://github.com/fsquillace/junest-builder.git /opt/junest-builder

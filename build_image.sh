@@ -17,19 +17,6 @@ mkdir -p ${JUNEST_BUILDER}/junest
 
 # ArchLinux System initialization
 sudo pacman -Syu --noconfirm
-sudo pacman -S --noconfirm git base-devel arch-install-scripts haveged
-
-mkdir -p ${JUNEST_BUILDER}/tmp/package-query
-cd ${JUNEST_BUILDER}/tmp/package-query
-curl -L -J -O -k "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=package-query"
-makepkg --noconfirm -sfc
-sudo pacman --noconfirm -U package-query*.pkg.tar.xz
-mkdir -p ${JUNEST_BUILDER}/tmp/yaourt
-cd ${JUNEST_BUILDER}/tmp/yaourt
-curl -L -J -O -k "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=yaourt"
-makepkg --noconfirm -sfc
-sudo pacman --noconfirm -U yaourt*.pkg.tar.xz
-yaourt -S --noconfirm droxi junest-git
 sudo systemctl start haveged
 
 # Building JuNest image
