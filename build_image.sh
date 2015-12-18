@@ -13,10 +13,11 @@ JUNEST_BUILDER=/home/builder/junest-builder
 # Cleanup and initialization
 [ -e "${JUNEST_BUILDER}" ] && sudo rm -rf ${JUNEST_BUILDER}
 mkdir -p ${JUNEST_BUILDER}/tmp
-mkdir -p ${JUNEST_BUILDER}/junest
 
 # ArchLinux System initialization
 sudo pacman -Syu --noconfirm
+yaourt -S --noconfirm junest-git
+
 sudo systemctl start haveged
 
 # Building JuNest image

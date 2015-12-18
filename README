@@ -2,29 +2,65 @@
 
 
 
-Installation
+Installation (Classic)
 ------------
 
-You need to update the Arch Linux system, create a user named *builder* and
-put the content of this repository in the builder's home:
-    # pacman -Syu
-    # pacman -S sudo git
-    # useradd -m builder
-    # passwd builder
-    # echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-    # su builder
-    # git clone https://github.com/fsquillace/junest-builder.git /home/builder
-    # git config --global user.email "builder@junest.org"
-    # git config --global user.name "builder"
+Given an Arch Linux system, run the following to prepare the JuNest builder:
 
-Quickstart
-----------
+    curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash
+
+This will create a new user (`builder`) and create the basic packages such as
+`droxi` used for publishing the JuNest image to Dropbox.
+
+Create manually the JuNest image
+~~~~~~~~~~~~
 Access as *builder* user:
 
+    # ssh builder@<hostname>
     $ ARCH=<one of x86, x86_64, arm>
+    $ git clone https://github.com/fsquillace/junest-builder.git /home/builder
     $ systemctl --user daemon-reload
     $ systemctl --user start junest@${ARCH}.service
 
 To automatically generate the image as soon as the user session is opened:
 
     $ systemctl --user enable junest@${ARCH}.service
+
+Installation using Digital Ocean
+----------------------------------
+
+With [Digital Ocean](https://cloud.digitalocean.com/droplets)
+you can create x32 or x64 JuNest builders.
+This procedure suppose you already have a digital ocean account.
+
+Please, follow these steps to create a snapshot for JuNest builder:
+
+- Create a [ssh key](https://cloud.digitalocean.com/settings/security)
+    - Store the generated key in your pc in `~/.ssh/digitalocean_rsa`
+- Go to 'Create a droplet':
+    - Select the options defined [here](https://github.com/gh2o/digitalocean-debian-to-arch)
+    - Select the ssh key you have previously created
+    - You now have a full ArchLinux droplet ready!
+- Install the JuNest builder:
+    - Ssh to the droplet:
+    `ssh -i ~/.ssh/digitalocean_rsa root@<droplet ip>`
+    - Execute the script:
+    `curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash`
+    - Provide the droxi access code at the end of the procedure.
+    - `poweroff` the droplet
+- Create a snapshot from the created droplet
+
+You now have the JuNest builder snapshot!
+
+To automate the creation of JuNest images you also need:
+
+- Create an access token from the digital ocean website
+- Get the snapshot image id you have previously created:
+    `curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer <access token>' "https://api.digitalocean.com/v2/images"`
+- Get the ssh key id you have previously created:
+    `curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer <access token>' "https://api.digitalocean.com/v2/account/keys"`
+
+Create the JuNest image using Digital Ocean snapshot
+~~~~~~~~~~~~~~~~~~~~~~~
+
+    ./start_digitalocean.sh 'Your digital ocean access token' <snapshot id> <ssh key id> <x86 or x86_64>
