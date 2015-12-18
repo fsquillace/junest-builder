@@ -63,5 +63,47 @@ Create the JuNest image using Digital Ocean snapshot
 ----------------------------------
 
 ```sh
-    ./start_digitalocean.sh 'Your digital ocean access token' <snapshot id> <ssh key id> <x86 or x86_64>
+    ./start_digitalocean.sh <access token> <snapshot id> <ssh key id> <x86 or x86\_64>
+```
+
+Installation using Scaleway
+================
+
+**Please Note**: This is just a draft at the moment.
+
+With [Scaleway](https://cloud.scaleway.com)
+you can create an arm JuNest builder.
+This procedure suppose you already have a scaleway account.
+
+Please, follow these steps to create a snapshot for JuNest builder:
+
+- Create a [ssh key](https://cloud.scaleway.com/#/credentials)
+    - Store the generated key in your pc in `~/.ssh/scaleway_rsa`
+- Go to 'Create a Arch Linux server'
+- Install the JuNest builder:
+    - Ssh to the server:
+    `ssh -i ~/.ssh/scaleway_rsa root@<server ip>`
+    - Execute the script:
+    `curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash`
+    - Provide the droxi access code at the end of the procedure.
+    - `poweroff` the server
+- Create an image from the created server
+    - Shut down the server (as archive)
+    - From the volume, create the snapshot
+    - From the snapshot create the image
+
+You now have the JuNest builder image!
+
+To automate the creation of JuNest images you also need:
+
+- Create an access token from the scaleway website
+- Get the image id you have previously created from the scaleway website
+- Get the organization id:
+    `curl -X GET -H "X-Auth-Token: <access token>" https://account.cloud.online.net/organizations`
+
+Create the JuNest image using Scaleway image
+----------------------------------
+
+```sh
+    ./start_scaleway.sh <access token> <image id> <organization id> <x86 or x86\_64>
 ```
