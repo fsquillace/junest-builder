@@ -45,7 +45,9 @@ Please, follow these steps to create a snapshot for JuNest builder:
     `ssh -i ~/.ssh/digitalocean_rsa root@<droplet ip>`
     - Execute the script:
     `curl -k https://raw.githubusercontent.com/fsquillace/junest-builder/master/setup_builder.sh | bash`
+    - Access as ***builder*** user: `ssh -i ~/.ssh/digitalocean_rsa builder@<droplet ip>`
     - Provide the droxi access code at the end of the procedure.
+      - `droxi`
     - `poweroff` the droplet
 - Create a snapshot from the created droplet
 
