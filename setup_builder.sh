@@ -11,6 +11,7 @@ mkdir /home/builder
 chown builder /home/builder
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+cd /
 sudo -u builder bash << EOF
 
 git clone https://github.com/fsquillace/junest-builder.git /home/builder
