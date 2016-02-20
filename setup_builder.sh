@@ -7,16 +7,14 @@ pacman --noconfirm -Syu
 pacman -S --noconfirm base-devel || echo "The base-devel installation did not work"
 pacman -S --noconfirm git arch-install-scripts haveged
 useradd builder
-
-git clone https://github.com/fsquillace/junest-builder.git /home/builder
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-mkdir /home/builder/.ssh
-cp /root/.ssh/authorized_keys /home/builder/.ssh/
-git config --global user.email "builder@junest.org"
-git config --global user.name "builder"
-
 
 sudo -u builder bash << EOF
+
+git config --global user.email "builder@junest.org"
+git config --global user.name "builder"
+git clone https://github.com/fsquillace/junest-builder.git /home/builder
+
 JUNEST_BUILDER=/tmp/builder
 
 # Cleanup and initialization
@@ -36,3 +34,7 @@ sudo pacman --noconfirm -U yaourt*.pkg.tar.xz
 yaourt -S --noconfirm droxi
 droxi
 EOF
+
+mkdir -p /home/builder/.ssh
+cp /root/.ssh/authorized_keys /home/builder/.ssh/
+chown -R builder /home/builder/.ssh
