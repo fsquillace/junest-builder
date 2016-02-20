@@ -6,7 +6,7 @@ set -eu
 pacman --noconfirm -Syu
 pacman -S --noconfirm base-devel || echo "The base-devel installation did not work"
 pacman -S --noconfirm git arch-install-scripts haveged
-useradd builder
+useradd -m builder
 echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 sudo -u builder bash << EOF
